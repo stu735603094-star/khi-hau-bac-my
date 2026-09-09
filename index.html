@@ -15,11 +15,11 @@
     <span class="text-xs bg-indigo-600 px-2.5 py-1 rounded-full font-semibold" id="challenge-badge">Thử thách 1/4</span>
   </header>
 
-  <!-- Khung bản đồ -->
+  <!-- Khung bản đồ tương tác -->
   <div class="relative flex-1 bg-black overflow-hidden flex items-center justify-center">
     <div id="panzoom-element" class="cursor-grab active:cursor-grabbing w-full h-full flex items-center justify-center">
-      <!-- ⚠️ LƯU Ý: Sửa lại tên file ảnh của bạn ở dòng bên dưới ⚠️ -->
-      <img id="map-image" src="bando.png" alt="Bản đồ khí hậu" class="max-w-none h-full object-contain">
+      <!-- Kiểm tra đúng tên file ảnh trên GitHub của bạn ở src dưới đây -->
+      <img id="map-image" src="bando.jpg" alt="Bản đồ khí hậu" class="max-w-none h-full object-contain">
     </div>
     
     <!-- Nút điều khiển Zoom -->
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <!-- Bảng nhiệm vụ & Ô trả lời riêng cho từng Thử thách -->
+  <!-- Bảng nhiệm vụ & Ô trả lời riêng từng Thử thách -->
   <div class="bg-slate-800 border-t border-slate-700 p-4 rounded-t-2xl shadow-2xl flex flex-col gap-3 max-h-[45vh] overflow-y-auto">
     
     <!-- THỬ THÁCH 1 -->
@@ -40,9 +40,9 @@
       
       <div class="space-y-1">
         <label class="text-[11px] text-amber-300 font-semibold">✍️ Ô trả lời nhiệm vụ 1:</label>
-        <textarea id="ans-1" rows="2" placeholder="Nêu nhận xét của em (ví dụ: Lạnh -> Ôn đới -> Cận nhiệt...)" class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
+        <textarea id="ans-1" rows="2" placeholder="Nêu nhận xét của em..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
       </div>
-      <button onclick="submitAnswer(1)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs">
+      <button id="btn-1" onclick="submitAnswer(1)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs transition">
         🚀 Nộp câu trả lời Thử thách 1
       </button>
     </div>
@@ -56,7 +56,7 @@
         <label class="text-[11px] text-amber-300 font-semibold">✍️ Ô trả lời nhiệm vụ 2:</label>
         <textarea id="ans-2" rows="2" placeholder="Chỉ ra nơi có sự thay đổi khí hậu rõ nhất..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
       </div>
-      <button onclick="submitAnswer(2)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs">
+      <button id="btn-2" onclick="submitAnswer(2)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs transition">
         🚀 Nộp câu trả lời Thử thách 2
       </button>
     </div>
@@ -70,7 +70,7 @@
         <label class="text-[11px] text-amber-300 font-semibold">✍️ Ô trả lời nhiệm vụ 3:</label>
         <textarea id="ans-3" rows="2" placeholder="So sánh sự khác nhau về khí hậu ở 2 phía sườn dãy núi..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
       </div>
-      <button onclick="submitAnswer(3)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs">
+      <button id="btn-3" onclick="submitAnswer(3)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs transition">
         🚀 Nộp câu trả lời Thử thách 3
       </button>
     </div>
@@ -88,7 +88,7 @@
           <input type="checkbox" name="cause" value="Địa hình" class="w-4 h-4 accent-amber-500"> B. Địa hình
         </label>
         <label class="flex items-center gap-2 p-1.5 bg-slate-700/60 rounded border border-slate-600 cursor-pointer">
-          <input type="checkbox" name="cause" value="Ảnh hưởng của biển và dòng biển" class="w-4 h-4 accent-amber-500"> C. Ảnh hưởng của biển và dòng biển
+          <input type="checkbox" name="cause" value="Biển và dòng biển" class="w-4 h-4 accent-amber-500"> C. Biển và dòng biển
         </label>
       </div>
 
@@ -97,12 +97,12 @@
         <textarea id="ans-4" rows="2" placeholder="Giải thích ngắn gọn lý do em chọn phương án trên..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
       </div>
 
-      <button onclick="submitAnswer(4)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs">
+      <button id="btn-4" onclick="submitAnswer(4)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs transition">
         🚀 Nộp câu trả lời Thử thách 4
       </button>
     </div>
 
-    <!-- Nút chuyển bước bài học -->
+    <!-- Nút điều hướng -->
     <div class="flex justify-between items-center pt-2 border-t border-slate-700">
       <button id="prev-btn" onclick="changeStep(-1)" class="text-xs bg-slate-700 px-3 py-1.5 rounded disabled:opacity-30" disabled>⬅️ Quay lại</button>
       <button id="next-btn" onclick="changeStep(1)" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-4 py-1.5 rounded font-bold">Thử thách tiếp ➡️</button>
@@ -133,22 +133,51 @@
       panzoom.reset();
     }
 
+    // Link Web App Google Apps Script của bạn
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWPbmgV0qNToACKJwVPi7MccmL-3KpVoFU7Ac7mc1Nu4lqQSzvKVW_XfLCv66DiU0D/exec";
+
     function submitAnswer(stepNum) {
+      let payloadText = "";
+
       if (stepNum === 4) {
         const checkedBoxes = document.querySelectorAll('input[name="cause"]:checked');
         if (checkedBoxes.length === 0) {
           alert("Em hãy chọn ít nhất 1 đáp án A, B hoặc C trước khi nộp!");
           return;
         }
+        const selected = Array.from(checkedBoxes).map(cb => cb.value).join(", ");
+        const explanation = document.getElementById('ans-4').value.trim();
+        payloadText = `Đã chọn: [${selected}] | Giải thích: ${explanation}`;
+      } else {
+        payloadText = document.getElementById(`ans-${stepNum}`).value.trim();
       }
 
-      const text = document.getElementById(`ans-${stepNum}`).value.trim();
-      if (!text) {
-        alert(`Em hãy viết nội dung vào ô trả lời của Thử thách ${stepNum} nhé!`);
+      if (!payloadText) {
+        alert(`Em hãy nhập nội dung câu trả lời cho Thử thách ${stepNum} nhé!`);
         return;
       }
 
-      alert(`✅ Đã nộp thành công câu trả lời cho Thử thách ${stepNum}!\n\nHãy chuẩn bị trao đổi kết quả với bạn bên cạnh (Think - Pair - Share).`);
+      const btn = document.getElementById(`btn-${stepNum}`);
+      btn.innerText = "⏳ Đang nộp bài...";
+      btn.disabled = true;
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ step: `Thử thách ${stepNum}`, answer: payloadText })
+      })
+      .then(() => {
+        alert(`✅ Đã nộp thành công câu trả lời Thử thách ${stepNum} về trang tính Giáo viên!`);
+        btn.innerText = `✅ Đã nộp Thử thách ${stepNum}`;
+        btn.classList.remove("bg-emerald-600", "hover:bg-emerald-500");
+        btn.classList.add("bg-slate-600");
+      })
+      .catch(error => {
+        alert("Thao tác gặp sự cố, em hãy bấm nộp lại nhé!");
+        btn.innerText = `🚀 Nộp câu trả lời Thử thách ${stepNum}`;
+        btn.disabled = false;
+      });
     }
   </script>
 </body>
