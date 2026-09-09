@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Em Là Nhà Thám Hiểm Khí Hậu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 h-screen flex flex-col font-sans overflow-hidden">
+
+  <!-- thanh tiêu đề -->
+  <header class="bg-slate-800 p-3 text-center shadow-md border-b border-slate-700 flex justify-between items-center">
+    <h1 class="font-bold text-amber-400 text-xs sm:text-sm">🌎 THÁM HIỂM KHÍ HẬU BẮC MỸ</h1>
+    <span class="text-xs bg-indigo-600 px-2.5 py-1 rounded-full font-semibold" id="challenge-badge">Thử thách 1/4</span>
+  </header>
+
+  <!-- khung bản đồ tương tác -->
+  <div class="relative flex-1 bg-black overflow-hidden flex items-center justify-center">
+    <div id="panzoom-element" class="cursor-grab active:cursor-grabbing w-full h-full flex items-center justify-center">
+      <!-- Thay tên file ảnh của bạn vào thuộc tính src dưới đây -->
+      <img id="map-image" src="bando.jpg" alt="Bản đồ khí hậu Bắc Mỹ" class="max-w-none h-full object-contain">
+    </div>
+    
+    <!-- nút điều khiển zoom -->
+    <div class="absolute right-3 top-3 flex flex-col gap-2 bg-slate-800/80 p-1.5 rounded-lg border border-slate-600">
+      <button onclick="panzoom.zoomIn()" class="w-8 h-8 bg-slate-700 font-bold rounded text-lg flex items-center justify-center">+</button>
+      <button onclick="panzoom.zoomOut()" class="w-8 h-8 bg-slate-700 font-bold rounded text-lg flex items-center justify-center">-</button>
+      <button onclick="panzoom.reset()" class="w-8 h-8 bg-amber-600 font-bold rounded text-xs flex items-center justify-center">Reset</button>
+    </div>
+  </div>
+
+  <!-- bảng nhiệm vụ thử thách -->
+  <div class="bg-slate-800 border-t border-slate-700 p-4 rounded-t-2xl shadow-2xl flex flex-col gap-3 max-h-[45vh] overflow-y-auto">
+    
+    <div id="step-1" class="step-content space-y-2">
+      <h2 class="text-amber-400 font-bold text-base">🔎 Thử thách 1: Đi từ Bắc xuống Nam</h2>
+      <p class="text-xs text-slate-300">Dùng tay kéo bản đồ từ hướng <b>Bắc xuống Nam</b>. Quan sát sự thay đổi của các đới khí hậu (Màu sắc thay đổi như thế nào?).</p>
+    </div>
+
+    <div id="step-2" class="step-content hidden space-y-2">
+      <h2 class="text-amber-400 font-bold text-base">🔎 Thử thách 2: Đi từ Tây sang Đông</h2>
+      <p class="text-xs text-slate-300">Kéo bản đồ theo hướng: <b>Thái Bình Dương → Coóc-đi-e → Nội địa → Đại Tây Dương</b>. Chỉ ra nơi khí hậu thay đổi rõ nhất!</p>
+    </div>
+
+    <div id="step-3" class="step-content hidden space-y-2">
+      <h2 class="text-amber-400 font-bold text-base">🔎 Thử thách 3: Dãy núi có làm thay đổi khí hậu?</h2>
+      <p class="text-xs text-slate-300">Phóng to khu vực <b>Dãy Coóc-đi-e (Rocky)</b>. Quan sát và so sánh khí hậu ở 2 phía sườn Tây và sườn Đông dãy núi.</p>
+    </div>
+
+    <div id="step-4" class="step-content hidden space-y-3">
+      <h2 class="text-amber-400 font-bold text-base">🔎 Thử thách 4: Truy tìm nguyên nhân</h2>
+      <p class="text-xs text-slate-300">Những yếu tố nào làm khí hậu Bắc Mỹ phân hóa đa dạng? (Chọn các phương án em cho là đúng):</p>
+      
+      <form id="poll-form" class="space-y-2 text-xs">
+        <label class="flex items-center gap-2 p-2 bg-slate-700/60 rounded-lg border border-slate-600 cursor-pointer">
+          <input type="checkbox" name="cause" value="Vị trí vĩ độ" class="w-4 h-4 accent-amber-500"> A. Vị trí vĩ độ
+        </label>
+        <label class="flex items-center gap-2 p-2 bg-slate-700/60 rounded-lg border border-slate-600 cursor-pointer">
+          <input type="checkbox" name="cause" value="Địa hình" class="w-4 h-4 accent-amber-500"> B. Địa hình
+        </label>
+        <label class="flex items-center gap-2 p-2 bg-slate-700/60 rounded-lg border border-slate-600 cursor-pointer">
+          <input type="checkbox" name="cause" value="Ảnh hưởng của biển và dòng biển" class="w-4 h-4 accent-amber-500"> C. Ảnh hưởng của biển và dòng biển
+        </label>
+        
+        <textarea id="explanation" rows="2" placeholder="Giải thích ngắn gọn lựa chọn của em..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs mt-1 focus:outline-none focus:border-amber-400"></textarea>
+        
+        <button type="button" onclick="submitAnswer()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-lg mt-2">
+          🚀 Nộp Bài Thám Hiểm
+        </button>
+      </form>
+    </div>
+
+    <!-- nút điều hướng -->
+    <div class="flex justify-between items-center pt-2 border-t border-slate-700">
+      <button id="prev-btn" onclick="changeStep(-1)" class="text-xs bg-slate-700 px-3 py-1.5 rounded disabled:opacity-30" disabled>⬅️ Quay lại</button>
+      <button id="next-btn" onclick="changeStep(1)" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-4 py-1.5 rounded font-bold">Thử thách tiếp ➡️</button>
+    </div>
+
+  </div>
+
+  <script>
+    const elem = document.getElementById('panzoom-element');
+    const panzoom = Panzoom(elem, { maxScale: 5, minScale: 0.8, contain: 'outside' });
+    elem.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
+
+    let currentStep = 1;
+    
+    function changeStep(direction) {
+      document.getElementById(`step-${currentStep}`).classList.add('hidden');
+      currentStep += direction;
+      document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+
+      document.getElementById('challenge-badge').innerText = `Thử thách ${currentStep}/4`;
+      document.getElementById('prev-btn').disabled = (currentStep === 1);
+      
+      if (currentStep === 4) {
+        document.getElementById('next-btn').classList.add('hidden');
+      } else {
+        document.getElementById('next-btn').classList.remove('hidden');
+      }
+      panzoom.reset();
+    }
+
+    function submitAnswer() {
+      const checkedBoxes = document.querySelectorAll('input[name="cause"]:checked');
+      if (checkedBoxes.length === 0) {
+        alert("Em hãy chọn ít nhất 1 đáp án trước khi nộp nhé!");
+        return;
+      }
+      alert("🎉 Tuyệt vời! Em đã hoàn thành 4 thử thách thám hiểm.\nHãy sẵn sàng chia sẻ kết quả với bạn bên cạnh (Think - Pair - Share)!");
+    }
+  </script>
+</body>
+</html>
