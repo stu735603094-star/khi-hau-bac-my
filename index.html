@@ -38,6 +38,9 @@
       <h2 class="text-amber-400 font-bold text-base">🔎 Thử thách 1: Đi từ Bắc xuống Nam</h2>
       <p class="text-xs text-slate-300">Dùng tay kéo bản đồ từ hướng <b>Bắc xuống Nam</b>. Quan sát sự thay đổi của các đới khí hậu.</p>
       <textarea id="ans-1" rows="2" placeholder="Nhập nhận xét của em (Ví dụ: Lạnh → ôn đới...)" class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
+      <button type="button" onclick="submitStep(1)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs transition">
+        🚀 Nộp Nhận Xét Thử Thách 1
+      </button>
     </div>
 
     <!-- THỬ THÁCH 2 -->
@@ -45,6 +48,9 @@
       <h2 class="text-amber-400 font-bold text-base">🔎 Thử thách 2: Đi từ Tây sang Đông</h2>
       <p class="text-xs text-slate-300">Kéo bản đồ theo hướng: <b>Thái Bình Dương → Coóc-đi-e → Nội địa → Đại Tây Dương</b>.</p>
       <textarea id="ans-2" rows="2" placeholder="Nhập nhận xét: Em thấy khí hậu thay đổi như thế nào? Nơi nào khác biệt nhất?" class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
+      <button type="button" onclick="submitStep(2)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs transition">
+        🚀 Nộp Nhận Xét Thử Thách 2
+      </button>
     </div>
 
     <!-- THỬ THÁCH 3 -->
@@ -52,6 +58,9 @@
       <h2 class="text-amber-400 font-bold text-base">🔎 Thử thách 3: Dãy núi có làm thay đổi khí hậu?</h2>
       <p class="text-xs text-slate-300">Phóng to khu vực <b>Dãy Coóc-đi-e (Rocky)</b>. So sánh khí hậu 2 phía sườn dãy núi.</p>
       <textarea id="ans-3" rows="2" placeholder="Nhập nhận xét: Khí hậu giữa sườn Tây và sườn Đông khác nhau ra sao?" class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
+      <button type="button" onclick="submitStep(3)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs transition">
+        🚀 Nộp Nhận Xét Thử Thách 3
+      </button>
     </div>
 
     <!-- THỬ THÁCH 4 -->
@@ -72,7 +81,7 @@
         
         <textarea id="explanation" rows="2" placeholder="Giải thích ngắn gọn lựa chọn của em..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs mt-1 focus:outline-none focus:border-amber-400"></textarea>
         
-        <button type="button" onclick="submitAnswer()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-lg mt-2">
+        <button type="button" onclick="submitAnswer()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-lg mt-2 transition">
           🚀 Nộp Bài Thám Hiểm
         </button>
       </form>
@@ -107,6 +116,15 @@
         document.getElementById('next-btn').classList.remove('hidden');
       }
       panzoom.reset();
+    }
+
+    function submitStep(stepNum) {
+      const val = document.getElementById(`ans-${stepNum}`).value.trim();
+      if (!val) {
+        alert(`Em chưa nhập nhận xét cho Thử thách ${stepNum}! Hãy ghi lại ý kiến trước khi nộp nhé.`);
+        return;
+      }
+      alert(`🎉 Đã lưu câu trả lời Thử thách ${stepNum}!\nEm hãy bấm "Thử thách tiếp ➡️" để chuyển bài.`);
     }
 
     function submitAnswer() {
