@@ -33,21 +33,28 @@
   <!-- bảng nhiệm vụ thử thách -->
   <div class="bg-slate-800 border-t border-slate-700 p-4 rounded-t-2xl shadow-2xl flex flex-col gap-3 max-h-[45vh] overflow-y-auto">
     
+    <!-- THỬ THÁCH 1 -->
     <div id="step-1" class="step-content space-y-2">
       <h2 class="text-amber-400 font-bold text-base">🔎 Thử thách 1: Đi từ Bắc xuống Nam</h2>
-      <p class="text-xs text-slate-300">Dùng tay kéo bản đồ từ hướng <b>Bắc xuống Nam</b>. Quan sát sự thay đổi của các đới khí hậu (Màu sắc thay đổi như thế nào?).</p>
+      <p class="text-xs text-slate-300">Dùng tay kéo bản đồ từ hướng <b>Bắc xuống Nam</b>. Quan sát sự thay đổi của các đới khí hậu.</p>
+      <textarea id="ans-1" rows="2" placeholder="Nhập nhận xét của em (Ví dụ: Lạnh → ôn đới...)" class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
     </div>
 
+    <!-- THỬ THÁCH 2 -->
     <div id="step-2" class="step-content hidden space-y-2">
       <h2 class="text-amber-400 font-bold text-base">🔎 Thử thách 2: Đi từ Tây sang Đông</h2>
-      <p class="text-xs text-slate-300">Kéo bản đồ theo hướng: <b>Thái Bình Dương → Coóc-đi-e → Nội địa → Đại Tây Dương</b>. Chỉ ra nơi khí hậu thay đổi rõ nhất!</p>
+      <p class="text-xs text-slate-300">Kéo bản đồ theo hướng: <b>Thái Bình Dương → Coóc-đi-e → Nội địa → Đại Tây Dương</b>.</p>
+      <textarea id="ans-2" rows="2" placeholder="Nhập nhận xét: Em thấy khí hậu thay đổi như thế nào? Nơi nào khác biệt nhất?" class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
     </div>
 
+    <!-- THỬ THÁCH 3 -->
     <div id="step-3" class="step-content hidden space-y-2">
       <h2 class="text-amber-400 font-bold text-base">🔎 Thử thách 3: Dãy núi có làm thay đổi khí hậu?</h2>
-      <p class="text-xs text-slate-300">Phóng to khu vực <b>Dãy Coóc-đi-e (Rocky)</b>. Quan sát và so sánh khí hậu ở 2 phía sườn Tây và sườn Đông dãy núi.</p>
+      <p class="text-xs text-slate-300">Phóng to khu vực <b>Dãy Coóc-đi-e (Rocky)</b>. So sánh khí hậu 2 phía sườn dãy núi.</p>
+      <textarea id="ans-3" rows="2" placeholder="Nhập nhận xét: Khí hậu giữa sườn Tây và sườn Đông khác nhau ra sao?" class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
     </div>
 
+    <!-- THỬ THÁCH 4 -->
     <div id="step-4" class="step-content hidden space-y-3">
       <h2 class="text-amber-400 font-bold text-base">🔎 Thử thách 4: Truy tìm nguyên nhân</h2>
       <p class="text-xs text-slate-300">Những yếu tố nào làm khí hậu Bắc Mỹ phân hóa đa dạng? (Chọn các phương án em cho là đúng):</p>
@@ -105,10 +112,10 @@
     function submitAnswer() {
       const checkedBoxes = document.querySelectorAll('input[name="cause"]:checked');
       if (checkedBoxes.length === 0) {
-        alert("Em hãy chọn ít nhất 1 đáp án trước khi nộp nhé!");
+        alert("Em hãy chọn ít nhất 1 đáp án ở Thử thách 4 trước khi nộp nhé!");
         return;
       }
-      alert("🎉 Tuyệt vời! Em đã hoàn thành 4 thử thách thám hiểm.\nHãy sẵn sàng chia sẻ kết quả với bạn bên cạnh (Think - Pair - Share)!");
+      alert("🎉 Tuyệt vời! Em đã hoàn thành toàn bộ bài thám hiểm.\nHãy dùng các nội dung đã nhập để trao đổi với bạn bên cạnh (Think - Pair - Share)!");
     }
   </script>
 </body>
