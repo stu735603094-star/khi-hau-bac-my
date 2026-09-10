@@ -18,7 +18,7 @@
   <!-- Khung bản đồ tương tác -->
   <div class="relative flex-1 bg-black overflow-hidden flex items-center justify-center">
     <div id="panzoom-element" class="cursor-grab active:cursor-grabbing w-full h-full flex items-center justify-center">
-      <!-- Kiểm tra đúng tên file ảnh trên GitHub của bạn ở src dưới đây -->
+      <!-- Tên file ảnh bản đồ trên GitHub (đảm bảo trùng tên file bando.jpg) -->
       <img id="map-image" src="bando.png" alt="Bản đồ khí hậu" class="max-w-none h-full object-contain">
     </div>
     
@@ -30,9 +30,15 @@
     </div>
   </div>
 
-  <!-- Bảng nhiệm vụ & Ô trả lời riêng từng Thử thách -->
-  <div class="bg-slate-800 border-t border-slate-700 p-4 rounded-t-2xl shadow-2xl flex flex-col gap-3 max-h-[45vh] overflow-y-auto">
+  <!-- Bảng nhiệm vụ & Ô trả lời -->
+  <div class="bg-slate-800 border-t border-slate-700 p-3.5 rounded-t-2xl shadow-2xl flex flex-col gap-3 max-h-[48vh] overflow-y-auto">
     
+    <!-- Ô nhập tên Học sinh / Nhóm -->
+    <div class="bg-slate-700/80 p-2.5 rounded-lg border border-amber-500/50 shadow-inner">
+      <label class="text-xs text-amber-300 font-bold block mb-1">👤 Họ và tên / Tên nhóm của em:</label>
+      <input type="text" id="student-name" placeholder="Ví dụ: Nguyễn Văn A - Lớp 8A (hoặc Nhóm 1)" class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400">
+    </div>
+
     <!-- THỬ THÁCH 1 -->
     <div id="step-1" class="step-content space-y-2">
       <h2 class="text-amber-400 font-bold text-sm sm:text-base">🔎 Thử thách 1: Đi từ Bắc xuống Nam</h2>
@@ -102,7 +108,7 @@
       </button>
     </div>
 
-    <!-- Nút điều hướng -->
+    <!-- Điều hướng -->
     <div class="flex justify-between items-center pt-2 border-t border-slate-700">
       <button id="prev-btn" onclick="changeStep(-1)" class="text-xs bg-slate-700 px-3 py-1.5 rounded disabled:opacity-30" disabled>⬅️ Quay lại</button>
       <button id="next-btn" onclick="changeStep(1)" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-4 py-1.5 rounded font-bold">Thử thách tiếp ➡️</button>
@@ -111,12 +117,14 @@
   </div>
 
   <script>
+    // Cấu hình Zoom bản đồ
     const elem = document.getElementById('panzoom-element');
     const panzoom = Panzoom(elem, { maxScale: 5, minScale: 0.8, contain: 'outside' });
     elem.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
 
     let currentStep = 1;
     
+    // Điều hướng giữa các Thử thách
     function changeStep(direction) {
       document.getElementById(`step-${currentStep}`).classList.add('hidden');
       currentStep += direction;
@@ -136,9 +144,18 @@
     // Link Web App Google Apps Script của bạn
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWPbmgV0qNToACKJwVPi7MccmL-3KpVoFU7Ac7mc1Nu4lqQSzvKVW_XfLCv66DiU0D/exec";
 
+    // Hàm xử lý Nộp câu trả lời
     function submitAnswer(stepNum) {
-      let payloadText = "";
+      // 1. Kiểm tra Tên học sinh
+      const studentName = document.getElementById('student-name').value.trim();
+      if (!studentName) {
+        alert("⚠️ Em hãy nhập Họ và tên (hoặc Tên nhóm) ở ô trên cùng trước khi nộp nhé!");
+        document.getElementById('student-name').focus();
+        return;
+      }
 
+      // 2. Lấy nội dung câu trả lời
+      let payloadText = "";
       if (stepNum === 4) {
         const checkedBoxes = document.querySelectorAll('input[name="cause"]:checked');
         if (checkedBoxes.length === 0) {
@@ -158,17 +175,22 @@
       }
 
       const btn = document.getElementById(`btn-${stepNum}`);
-      btn.innerText = "⏳ Đang nộp bài...";
+      btn.innerText = "⏳ Đang gửi bài...";
       btn.disabled = true;
 
+      // 3. Gửi dữ liệu về Google Sheets
       fetch(SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ step: `Thử thách ${stepNum}`, answer: payloadText })
+        body: JSON.stringify({ 
+          studentName: studentName,
+          step: `Thử thách ${stepNum}`, 
+          answer: payloadText 
+        })
       })
       .then(() => {
-        alert(`✅ Đã nộp thành công câu trả lời Thử thách ${stepNum} về trang tính Giáo viên!`);
+        alert(`✅ Cảm ơn ${studentName}! Đã nộp thành công Thử thách ${stepNum} về trang tính Giáo viên.`);
         btn.innerText = `✅ Đã nộp Thử thách ${stepNum}`;
         btn.classList.remove("bg-emerald-600", "hover:bg-emerald-500");
         btn.classList.add("bg-slate-600");
