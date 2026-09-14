@@ -3,218 +3,274 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Em Là Nhà Thám Hiểm Khí Hậu</title>
+  <title>Khám Phá Khí Hậu Bắc Mỹ - Luyện Tập</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body class="bg-slate-900 text-slate-100 h-screen flex flex-col font-sans overflow-hidden">
 
-  <!-- MÀN HÌNH BẮT BUỘC NHẬP TÊN TRƯỚC KHI LÀM BÀI -->
-  <div id="name-modal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
-    <div class="bg-slate-800 border border-amber-500/40 p-6 rounded-2xl max-w-sm w-full text-center shadow-2xl space-y-4">
-      <div class="text-4xl">🌎</div>
-      <h2 class="text-base font-bold text-amber-400">THÁM HIỂM KHÍ HẬU BẮC MỸ</h2>
-      <p class="text-xs text-slate-300">Chào mừng em! Hãy nhập Họ và tên (hoặc Tên nhóm) để bắt đầu làm bài:</p>
+  <!-- 1. MÀN HÌNH BẮT BUỘC NHẬP TÊN HỌC SINH -->
+  <div id="name-modal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-800 border-2 border-amber-500/60 p-6 rounded-2xl max-w-md w-full text-center shadow-2xl space-y-4">
+      <div class="text-5xl animate-bounce">🗺️</div>
+      <h2 class="text-lg font-bold text-amber-400 uppercase tracking-wide">THÁM HIỂM KHÍ HẬU BẮC MỸ</h2>
+      <p class="text-xs text-slate-300">Dựa vào bản đồ kết hợp kiến thức sách giáo khoa, hãy điền đáp án đúng cho 8 câu hỏi thử thách!</p>
       
-      <input type="text" id="input-student-name" placeholder="Ví dụ: Nguyễn Văn A - Lớp 8A..." class="w-full p-3 bg-slate-900 border border-slate-600 rounded-lg text-slate-100 text-xs focus:outline-none focus:border-amber-400 text-center font-semibold">
-      
-      <button onclick="startLesson()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold py-2.5 rounded-lg text-xs transition shadow-lg">
-        🚀 BẮT ĐẦU VÀO LÀM BÀI
+      <div class="text-left space-y-1">
+        <label class="text-[11px] text-amber-300 font-semibold block">👤 Họ tên / Lớp / Nhóm của em:</label>
+        <input type="text" id="input-student-name" placeholder="Ví dụ: Nguyễn Văn A - Lớp 8A" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-slate-100 text-xs focus:outline-none focus:border-amber-400 font-semibold text-center">
+      </div>
+
+      <button onclick="startLesson()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold py-3 rounded-xl text-xs uppercase tracking-wider transition transform active:scale-95 shadow-lg">
+        🚀 BẮT ĐẦU BÀI LÀM
       </button>
     </div>
   </div>
 
-  <!-- Thanh tiêu đề -->
-  <header class="bg-slate-800 p-3 text-center shadow-md border-b border-slate-700 flex justify-between items-center">
+  <!-- 2. THANH TIÊU ĐỀ THÔNG TIN & ĐIỂM -->
+  <header class="bg-slate-800 p-2.5 px-4 border-b border-slate-700 flex justify-between items-center shadow-md">
     <div class="flex items-center gap-2">
-      <h1 class="font-bold text-amber-400 text-xs sm:text-sm">🌎 THÁM HIỂM KHÍ HẬU BẮC MỸ</h1>
-      <span id="display-student-name" class="text-[11px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded border border-amber-500/30 font-medium"></span>
+      <span class="text-base">🌎</span>
+      <div>
+        <h1 class="font-bold text-amber-400 text-xs sm:text-sm">KHÍ HẬU BẮC MỸ</h1>
+        <p id="display-student-name" class="text-[10px] text-slate-400 font-medium">Chưa nhập tên</p>
+      </div>
     </div>
-    <span class="text-xs bg-indigo-600 px-2.5 py-1 rounded-full font-semibold" id="challenge-badge">Thử thách 1/4</span>
+    
+    <!-- Điểm thưởng -->
+    <div class="bg-slate-900 border border-amber-500/40 px-3 py-1 rounded-full flex items-center gap-1.5">
+      <span class="text-amber-400 font-bold text-xs" id="score-text">⭐ 0/80 điểm</span>
+    </div>
   </header>
 
-  <!-- Khung bản đồ -->
-  <div class="relative flex-1 bg-black overflow-hidden flex items-center justify-center">
+  <!-- 3. KHUNG BẢN ĐỒ TƯƠNG TÁC -->
+  <div class="relative h-[38vh] bg-black overflow-hidden flex items-center justify-center border-b border-slate-700">
     <div id="panzoom-element" class="cursor-grab active:cursor-grabbing w-full h-full flex items-center justify-center">
       <img id="map-image" src="bando.png" alt="Bản đồ khí hậu" class="max-w-none h-full object-contain">
     </div>
     
-    <!-- Nút Zoom -->
-    <div class="absolute right-3 top-3 flex flex-col gap-2 bg-slate-800/80 p-1.5 rounded-lg border border-slate-600">
-      <button onclick="panzoom.zoomIn()" class="w-8 h-8 bg-slate-700 font-bold rounded text-lg flex items-center justify-center">+</button>
-      <button onclick="panzoom.zoomOut()" class="w-8 h-8 bg-slate-700 font-bold rounded text-lg flex items-center justify-center">-</button>
-      <button onclick="panzoom.reset()" class="w-8 h-8 bg-amber-600 font-bold rounded text-xs flex items-center justify-center">Reset</button>
+    <!-- Lời nhắc nhiệm vụ -->
+    <div class="absolute left-3 top-3 bg-slate-900/80 backdrop-blur border border-amber-500/40 px-2.5 py-1 rounded-lg text-[10px] text-amber-300 font-medium pointer-events-none">
+      💡 Phóng to bản đồ để tìm manh mối!
+    </div>
+
+    <!-- Nút điều khiển Zoom -->
+    <div class="absolute right-3 top-3 flex flex-col gap-1.5 bg-slate-800/80 p-1.5 rounded-lg border border-slate-600">
+      <button onclick="panzoom.zoomIn()" class="w-7 h-7 bg-slate-700 font-bold rounded text-base flex items-center justify-center hover:bg-slate-600">+</button>
+      <button onclick="panzoom.zoomOut()" class="w-7 h-7 bg-slate-700 font-bold rounded text-base flex items-center justify-center hover:bg-slate-600">-</button>
+      <button onclick="panzoom.reset()" class="w-7 h-7 bg-amber-600 font-bold rounded text-[10px] flex items-center justify-center hover:bg-amber-500">Reset</button>
     </div>
   </div>
 
-  <!-- Bảng nhiệm vụ -->
-  <div class="bg-slate-800 border-t border-slate-700 p-3.5 rounded-t-2xl shadow-2xl flex flex-col gap-3 max-h-[48vh] overflow-y-auto">
-    
-    <!-- THỬ THÁCH 1 -->
-    <div id="step-1" class="step-content space-y-2">
-      <h2 class="text-amber-400 font-bold text-sm sm:text-base">🔎 Thử thách 1: Đi từ Bắc xuống Nam</h2>
-      <p class="text-xs text-slate-300">Dùng tay kéo bản đồ từ Bắc xuống Nam. Quan sát sự thay đổi khí hậu.</p>
-      
-      <div class="space-y-1">
-        <label class="text-[11px] text-amber-300 font-semibold">✍️ Ô trả lời nhiệm vụ 1:</label>
-        <textarea id="ans-1" rows="2" placeholder="Nêu nhận xét của em..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
-      </div>
-      <button id="btn-1" onclick="submitAnswer(1)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs transition">
-        🚀 Nộp câu trả lời Thử thách 1
+  <!-- 4. KHUNG CÂU HỎI LUYỆN TẬP -->
+  <div class="flex-1 bg-slate-900 p-3 overflow-y-auto space-y-4">
+    <div class="bg-amber-500/10 border border-amber-500/30 p-2.5 rounded-xl text-center">
+      <p class="text-xs text-amber-300 font-semibold">
+        📌 <span class="underline">Yêu cầu:</span> Dựa vào bản đồ trên kết hợp kiến thức sách giáo khoa, hãy điền đáp án đúng vào các câu bên dưới:
+      </p>
+    </div>
+
+    <!-- CÂU 1 -->
+    <div id="card-1" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
+      <p class="text-xs font-bold text-amber-400">Câu 1. Đới khí hậu nào chiếm diện tích lớn nhất ở Bắc Mỹ?</p>
+      <input type="text" id="ans-1" placeholder="Nhập đáp án của em..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+      <div id="feedback-1" class="text-xs hidden font-medium"></div>
+      <button onclick="checkAndSubmit(1)" id="btn-1" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
+        ✔️ Kiểm tra & Nộp Câu 1
       </button>
     </div>
 
-    <!-- THỬ THÁCH 2 -->
-    <div id="step-2" class="step-content hidden space-y-2">
-      <h2 class="text-amber-400 font-bold text-sm sm:text-base">🔎 Thử thách 2: Đi từ Tây sang Đông</h2>
-      <p class="text-xs text-slate-300">Kéo bản đồ từ Thái Bình Dương -> Coóc-đi-e -> Nội địa -> Đại Tây Dương.</p>
-      
-      <div class="space-y-1">
-        <label class="text-[11px] text-amber-300 font-semibold">✍️ Ô trả lời nhiệm vụ 2:</label>
-        <textarea id="ans-2" rows="2" placeholder="Chỉ ra nơi có sự thay đổi khí hậu rõ nhất..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
-      </div>
-      <button id="btn-2" onclick="submitAnswer(2)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs transition">
-        🚀 Nộp câu trả lời Thử thách 2
+    <!-- CÂU 2 -->
+    <div id="card-2" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
+      <p class="text-xs font-bold text-amber-400">Câu 2. Lãnh thổ Bắc Mỹ trải dài từ vùng cực Bắc đến khoảng vĩ tuyến nào?</p>
+      <input type="text" id="ans-2" placeholder="Ví dụ: Khoảng vĩ tuyến 25 độ B..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+      <div id="feedback-2" class="text-xs hidden font-medium"></div>
+      <button onclick="checkAndSubmit(2)" id="btn-2" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
+        ✔️ Kiểm tra & Nộp Câu 2
       </button>
     </div>
 
-    <!-- THỬ THÁCH 3 -->
-    <div id="step-3" class="step-content hidden space-y-2">
-      <h2 class="text-amber-400 font-bold text-sm sm:text-base">🔎 Thử thách 3: Dãy núi có làm thay đổi khí hậu?</h2>
-      <p class="text-xs text-slate-300">Phóng to dãy Rocky / Coóc-đi-e. Quan sát sự phân bố khí hậu ở 2 phía sườn núi.</p>
-      
-      <div class="space-y-1">
-        <label class="text-[11px] text-amber-300 font-semibold">✍️ Ô trả lời nhiệm vụ 3:</label>
-        <textarea id="ans-3" rows="2" placeholder="So sánh sự khác nhau về khí hậu ở 2 phía sườn dãy núi..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
-      </div>
-      <button id="btn-3" onclick="submitAnswer(3)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs transition">
-        🚀 Nộp câu trả lời Thử thách 3
+    <!-- CÂU 3 -->
+    <div id="card-3" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
+      <p class="text-xs font-bold text-amber-400">Câu 3. Kể tên các đới khí hậu ở Bắc Mỹ theo thứ tự từ Bắc xuống Nam.</p>
+      <textarea id="ans-3" rows="2" placeholder="Cực và cận cực, ôn đới..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400"></textarea>
+      <div id="feedback-3" class="text-xs hidden font-medium"></div>
+      <button onclick="checkAndSubmit(3)" id="btn-3" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
+        ✔️ Kiểm tra & Nộp Câu 3
       </button>
     </div>
 
-    <!-- THỬ THÁCH 4 -->
-    <div id="step-4" class="step-content hidden space-y-2">
-      <h2 class="text-amber-400 font-bold text-sm sm:text-base">🔎 Thử thách 4: Truy tìm nguyên nhân</h2>
-      <p class="text-xs text-slate-300">Yếu tố nào làm khí hậu Bắc Mỹ phân hóa đa dạng?</p>
-
-      <div class="space-y-1 text-xs">
-        <label class="flex items-center gap-2 p-1.5 bg-slate-700/60 rounded border border-slate-600 cursor-pointer">
-          <input type="checkbox" name="cause" value="Vị trí vĩ độ" class="w-4 h-4 accent-amber-500"> A. Vị trí vĩ độ
-        </label>
-        <label class="flex items-center gap-2 p-1.5 bg-slate-700/60 rounded border border-slate-600 cursor-pointer">
-          <input type="checkbox" name="cause" value="Địa hình" class="w-4 h-4 accent-amber-500"> B. Địa hình
-        </label>
-        <label class="flex items-center gap-2 p-1.5 bg-slate-700/60 rounded border border-slate-600 cursor-pointer">
-          <input type="checkbox" name="cause" value="Biển và dòng biển" class="w-4 h-4 accent-amber-500"> C. Biển và dòng biển
-        </label>
-      </div>
-
-      <div class="space-y-1 mt-2">
-        <label class="text-[11px] text-amber-300 font-semibold">✍️ Ô giải thích lý do lựa chọn:</label>
-        <textarea id="ans-4" rows="2" placeholder="Giải thích ngắn gọn lý do em chọn phương án trên..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded text-slate-100 text-xs focus:outline-none focus:border-amber-400"></textarea>
-      </div>
-
-      <button id="btn-4" onclick="submitAnswer(4)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs transition">
-        🚀 Nộp câu trả lời Thử thách 4
+    <!-- CÂU 4 -->
+    <div id="card-4" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
+      <p class="text-xs font-bold text-amber-400">Câu 4. Nguyên nhân chủ yếu nào khiến khí hậu Bắc Mỹ phân hóa thành nhiều đới từ Bắc xuống Nam?</p>
+      <input type="text" id="ans-4" placeholder="Nhập nguyên nhân..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+      <div id="feedback-4" class="text-xs hidden font-medium"></div>
+      <button onclick="checkAndSubmit(4)" id="btn-4" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
+        ✔️ Kiểm tra & Nộp Câu 4
       </button>
     </div>
 
-    <!-- Điều hướng -->
-    <div class="flex justify-between items-center pt-2 border-t border-slate-700">
-      <button id="prev-btn" onclick="changeStep(-1)" class="text-xs bg-slate-700 px-3 py-1.5 rounded disabled:opacity-30" disabled>⬅️ Quay lại</button>
-      <button id="next-btn" onclick="changeStep(1)" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-4 py-1.5 rounded font-bold">Thử thách tiếp ➡️</button>
+    <!-- CÂU 5 -->
+    <div id="card-5" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
+      <p class="text-xs font-bold text-amber-400">Câu 5. So với vùng ven biển, khí hậu ở sâu trong nội địa Bắc Mỹ có đặc điểm gì khác biệt?</p>
+      <textarea id="ans-5" rows="2" placeholder="Nêu đặc điểm nhiệt độ, lượng mưa..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400"></textarea>
+      <div id="feedback-5" class="text-xs hidden font-medium"></div>
+      <button onclick="checkAndSubmit(5)" id="btn-5" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
+        ✔️ Kiểm tra & Nộp Câu 5
+      </button>
+    </div>
+
+    <!-- CÂU 6 -->
+    <div id="card-6" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
+      <p class="text-xs font-bold text-amber-400">Câu 6. Yếu tố địa hình và khoảng cách xa/gần biển làm khí hậu Bắc Mỹ phân hóa theo chiều nào?</p>
+      <input type="text" id="ans-6" placeholder="Theo chiều..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+      <div id="feedback-6" class="text-xs hidden font-medium"></div>
+      <button onclick="checkAndSubmit(6)" id="btn-6" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
+        ✔️ Kiểm tra & Nộp Câu 6
+      </button>
+    </div>
+
+    <!-- CÂU 7 -->
+    <div id="card-7" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
+      <p class="text-xs font-bold text-amber-400">Câu 7. Kể tên hai dòng biển NÓNG chảy ven bờ đại dương của Bắc Mỹ xuất hiện trong bản đồ.</p>
+      <input type="text" id="ans-7" placeholder="Tên 2 dòng biển nóng..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+      <div id="feedback-7" class="text-xs hidden font-medium"></div>
+      <button onclick="checkAndSubmit(7)" id="btn-7" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
+        ✔️ Kiểm tra & Nộp Câu 7
+      </button>
+    </div>
+
+    <!-- CÂU 8 -->
+    <div id="card-8" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
+      <p class="text-xs font-bold text-amber-400">Câu 8. Kể tên hai dòng biển LẠNH chảy ven bờ đại dương của Bắc Mỹ xuất hiện trong bản đồ.</p>
+      <input type="text" id="ans-8" placeholder="Tên 2 dòng biển lạnh..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+      <div id="feedback-8" class="text-xs hidden font-medium"></div>
+      <button onclick="checkAndSubmit(8)" id="btn-8" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
+        ✔️ Kiểm tra & Nộp Câu 8
+      </button>
     </div>
 
   </div>
 
   <script>
+    // Cấu hình Zoom bản đồ
     const elem = document.getElementById('panzoom-element');
     const panzoom = Panzoom(elem, { maxScale: 5, minScale: 0.8, contain: 'outside' });
     elem.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
 
-    let currentStep = 1;
     let currentStudentName = "";
+    let totalScore = 0;
+    const answered = {};
 
-    // Hàm bắt buộc nhập tên trước khi làm bài
+    // URL Apps Script của bạn
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWPbmgV0qNToACKJwVPi7MccmL-3KpVoFU7Ac7mc1Nu4lqQSzvKVW_XfLCv66DiU0D/exec";
+
+    // Đáp án chuẩn & Tkeywords kiểm tra thông minh
+    const ANSWER_KEYS = {
+      1: { standard: "Đới khí hậu ôn đới.", keywords: ["ôn đới"] },
+      2: { standard: "Khoảng vĩ tuyến 25°B.", keywords: ["25"] },
+      3: { standard: "Đới khí hậu cực và cận cực, ôn đới, cận nhiệt, nhiệt đới.", keywords: ["cực", "ôn đới", "cận nhiệt", "nhiệt đới"] },
+      4: { standard: "Do lãnh thổ trải dài trên nhiều vĩ độ.", keywords: ["vĩ độ", "trải dài"] },
+      5: { standard: "Biên độ nhiệt độ năm lớn hơn, mưa ít hơn, khí hậu khô hạn hơn.", keywords: ["biên độ", "khô", "ít mưa", "nhiệt độ"] },
+      6: { standard: "Theo chiều Tây – Đông (và theo độ cao).", keywords: ["tây", "đông"] },
+      7: { standard: "Dòng biển A-la-xca và dòng biển Cơn-stơ-rim.", keywords: ["a-la-xca", "cơn-stơ-rim", "alaska", "gulf stream", "con-sto-rim"] },
+      8: { standard: "Dòng biển La-bra-đo và dòng biển Ca-li-phoc-ni-a.", keywords: ["la-bra-đo", "ca-li-phoc-ni-a", "labrador", "california"] }
+    };
+
     function startLesson() {
       const nameInput = document.getElementById('input-student-name').value.trim();
       if (!nameInput) {
-        alert("⚠️ Em hãy điền Họ và tên (hoặc Tên nhóm) để bắt đầu nhé!");
+        alert("⚠️ Em hãy điền Họ và tên (hoặc Tên nhóm) trước khi làm bài nhé!");
         return;
       }
       currentStudentName = nameInput;
       document.getElementById('name-modal').classList.add('hidden');
-      document.getElementById('display-student-name').innerText = `👤 ${currentStudentName}`;
+      document.getElementById('display-student-name').innerText = `👤 Học sinh: ${currentStudentName}`;
     }
 
-    function changeStep(direction) {
-      document.getElementById(`step-${currentStep}`).classList.add('hidden');
-      currentStep += direction;
-      document.getElementById(`step-${currentStep}`).classList.remove('hidden');
-
-      document.getElementById('challenge-badge').innerText = `Thử thách ${currentStep}/4`;
-      document.getElementById('prev-btn').disabled = (currentStep === 1);
-      
-      if (currentStep === 4) {
-        document.getElementById('next-btn').classList.add('hidden');
-      } else {
-        document.getElementById('next-btn').classList.remove('hidden');
-      }
-      panzoom.reset();
+    function removeAccents(str) {
+      return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
     }
 
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWPbmgV0qNToACKJwVPi7MccmL-3KpVoFU7Ac7mc1Nu4lqQSzvKVW_XfLCv66DiU0D/exec";
-
-    function submitAnswer(stepNum) {
+    function checkAndSubmit(qNum) {
       if (!currentStudentName) {
-        alert("Không tìm thấy thông tin tên học sinh. Vui lòng tải lại trang!");
+        alert("Không tìm thấy tên học sinh. Vui lòng tải lại trang!");
         location.reload();
         return;
       }
 
-      let payloadText = "";
-      if (stepNum === 4) {
-        const checkedBoxes = document.querySelectorAll('input[name="cause"]:checked');
-        if (checkedBoxes.length === 0) {
-          alert("Em hãy chọn ít nhất 1 đáp án A, B hoặc C trước khi nộp!");
-          return;
-        }
-        const selected = Array.from(checkedBoxes).map(cb => cb.value).join(", ");
-        const explanation = document.getElementById('ans-4').value.trim();
-        payloadText = `Đã chọn: [${selected}] | Giải thích: ${explanation}`;
-      } else {
-        payloadText = document.getElementById(`ans-${stepNum}`).value.trim();
-      }
+      const inputElem = document.getElementById(`ans-${qNum}`);
+      const userText = inputElem.value.trim();
 
-      if (!payloadText) {
-        alert(`Em hãy nhập nội dung câu trả lời cho Thử thách ${stepNum} nhé!`);
+      if (!userText) {
+        alert(`Em chưa nhập câu trả lời cho Câu ${qNum}!`);
+        inputElem.focus();
         return;
       }
 
-      const btn = document.getElementById(`btn-${stepNum}`);
-      btn.innerText = "⏳ Đang gửi bài...";
+      const btn = document.getElementById(`btn-${qNum}`);
+      const feedback = document.getElementById(`feedback-${qNum}`);
+      const normalizedUserText = removeAccents(userText);
+      const keyObj = ANSWER_KEYS[qNum];
+
+      // Kiểm tra đáp án
+      let isCorrect = false;
+      if (qNum === 3 || qNum === 7 || qNum === 8) {
+        // Cần khớp ít nhất 2 từ khóa
+        let matchCount = 0;
+        keyObj.keywords.forEach(kw => {
+          if (normalizedUserText.includes(removeAccents(kw))) matchCount++;
+        });
+        isCorrect = matchCount >= 2;
+      } else {
+        isCorrect = keyObj.keywords.some(kw => normalizedUserText.includes(removeAccents(kw)));
+      }
+
+      feedback.classList.remove('hidden', 'text-emerald-400', 'text-amber-400', 'bg-emerald-950/40', 'bg-amber-950/40');
+      feedback.classList.add('p-2', 'rounded-lg', 'border');
+
+      if (isCorrect) {
+        feedback.classList.add('text-emerald-400', 'bg-emerald-950/40', 'border-emerald-500/40');
+        feedback.innerHTML = `🎉 <b>CHÍNH XÁC! TUYỆT VỜI!</b> (+10 điểm)<br><span class="text-slate-300 font-normal">ĐÁP ÁN CHUẨN: ${keyObj.standard}</span>`;
+        
+        // Hiệu ứng bắn pháo hoa khen thưởng
+        confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
+
+        if (!answered[qNum]) {
+          totalScore += 10;
+          answered[qNum] = true;
+          document.getElementById('score-text').innerText = `⭐ ${totalScore}/80 điểm`;
+        }
+      } else {
+        feedback.classList.add('text-amber-300', 'bg-amber-950/40', 'border-amber-500/40');
+        feedback.innerHTML = `💡 <b>GỢI Ý / ĐÁP ÁN CHUẨN:</b> ${keyObj.standard}<br><span class="text-slate-300 font-normal">Câu trả lời của em đã được ghi nhận về máy Giáo viên.</span>`;
+      }
+
+      // Khóa nút để tránh bấm gửi liên tục
+      btn.innerText = "⏳ Đang gửi về Google Sheet...";
       btn.disabled = true;
 
+      // Gửi dữ liệu về Google Sheets
       fetch(SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
           studentName: currentStudentName,
-          step: `Thử thách ${stepNum}`, 
-          answer: payloadText 
+          step: `Câu ${qNum}`, 
+          answer: `[${isCorrect ? "ĐÚNG" : "CHƯA CHUẨN"}] - ${userText}` 
         })
       })
       .then(() => {
-        alert(`✅ Cảm ơn ${currentStudentName}! Đã nộp thành công Thử thách ${stepNum} về máy Giáo viên.`);
-        btn.innerText = `✅ Đã nộp Thử thách ${stepNum}`;
-        btn.classList.remove("bg-emerald-600", "hover:bg-emerald-500");
-        btn.classList.add("bg-slate-600");
+        btn.innerText = isCorrect ? "✅ Đã nộp (Đúng +10đ)" : "✅ Đã ghi nhận câu trả lời";
+        btn.classList.remove("bg-indigo-600", "hover:bg-indigo-500");
+        btn.classList.add("bg-slate-700");
       })
       .catch(error => {
-        alert("Thao tác gặp sự cố, em hãy bấm nộp lại nhé!");
-        btn.innerText = `🚀 Nộp câu trả lời Thử thách ${stepNum}`;
+        btn.innerText = "🚀 Nộp lại";
         btn.disabled = false;
+        alert("Có sự cố mạng, em hãy bấm nộp lại nhé!");
       });
     }
   </script>
