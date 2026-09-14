@@ -29,7 +29,7 @@
   </div>
 
   <!-- 2. THANH TIÊU ĐỀ THÔNG TIN & ĐIỂM -->
-  <header class="bg-slate-800 p-2.5 px-4 border-b border-slate-700 flex justify-between items-center shadow-md">
+  <header class="bg-slate-800 p-2.5 px-4 border-b border-slate-700 flex justify-between items-center shadow-md shrink-0">
     <div class="flex items-center gap-2">
       <span class="text-base">🌎</span>
       <div>
@@ -45,7 +45,7 @@
   </header>
 
   <!-- 3. KHUNG BẢN ĐỒ TƯƠNG TÁC -->
-  <div class="relative h-[38vh] bg-black overflow-hidden flex items-center justify-center border-b border-slate-700">
+  <div class="relative h-[38vh] bg-black overflow-hidden flex items-center justify-center border-b border-slate-700 shrink-0">
     <div id="panzoom-element" class="cursor-grab active:cursor-grabbing w-full h-full flex items-center justify-center">
       <img id="map-image" src="bando.png" alt="Bản đồ khí hậu" class="max-w-none h-full object-contain">
     </div>
@@ -74,7 +74,7 @@
     <!-- CÂU 1 -->
     <div id="card-1" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
       <p class="text-xs font-bold text-amber-400">Câu 1. Đới khí hậu nào chiếm diện tích lớn nhất ở Bắc Mỹ?</p>
-      <input type="text" id="ans-1" placeholder="Nhập đáp án của em..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+      <input type="text" id="ans-1" placeholder="Nhập đáp án của em..." class="w-full p-2.5 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
       <div id="feedback-1" class="text-xs hidden font-medium"></div>
       <button onclick="checkAndSubmit(1)" id="btn-1" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
         ✔️ Kiểm tra & Nộp Câu 1
@@ -84,7 +84,7 @@
     <!-- CÂU 2 -->
     <div id="card-2" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
       <p class="text-xs font-bold text-amber-400">Câu 2. Lãnh thổ Bắc Mỹ trải dài từ vùng cực Bắc đến khoảng vĩ tuyến nào?</p>
-      <input type="text" id="ans-2" placeholder="Ví dụ: Khoảng vĩ tuyến 25 độ B..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+      <input type="text" id="ans-2" placeholder="Ví dụ: Khoảng vĩ tuyến 25 độ B..." class="w-full p-2.5 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
       <div id="feedback-2" class="text-xs hidden font-medium"></div>
       <button onclick="checkAndSubmit(2)" id="btn-2" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
         ✔️ Kiểm tra & Nộp Câu 2
@@ -94,7 +94,7 @@
     <!-- CÂU 3 -->
     <div id="card-3" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
       <p class="text-xs font-bold text-amber-400">Câu 3. Kể tên các đới khí hậu ở Bắc Mỹ theo thứ tự từ Bắc xuống Nam.</p>
-      <textarea id="ans-3" rows="2" placeholder="Cực và cận cực, ôn đới..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400"></textarea>
+      <textarea id="ans-3" rows="2" placeholder="Cực và cận cực, ôn đới..." class="w-full p-2.5 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400"></textarea>
       <div id="feedback-3" class="text-xs hidden font-medium"></div>
       <button onclick="checkAndSubmit(3)" id="btn-3" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
         ✔️ Kiểm tra & Nộp Câu 3
@@ -104,27 +104,27 @@
     <!-- CÂU 4 -->
     <div id="card-4" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
       <p class="text-xs font-bold text-amber-400">Câu 4. Nguyên nhân chủ yếu nào khiến khí hậu Bắc Mỹ phân hóa thành nhiều đới từ Bắc xuống Nam?</p>
-      <input type="text" id="ans-4" placeholder="Nhập nguyên nhân..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+      <input type="text" id="ans-4" placeholder="Nhập nguyên nhân..." class="w-full p-2.5 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
       <div id="feedback-4" class="text-xs hidden font-medium"></div>
       <button onclick="checkAndSubmit(4)" id="btn-4" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
         ✔️ Kiểm tra & Nộp Câu 4
       </button>
     </div>
 
-    <!-- CÂU 5 -->
+    <!-- CÂU 5 (MỚI: ĐƯỢC CHUYỂN TỪ CÂU 6 CŨ) -->
     <div id="card-5" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
-      <p class="text-xs font-bold text-amber-400">Câu 5. So với vùng ven biển, khí hậu ở sâu trong nội địa Bắc Mỹ có đặc điểm gì khác biệt?</p>
-      <textarea id="ans-5" rows="2" placeholder="Nêu đặc điểm nhiệt độ, lượng mưa..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400"></textarea>
+      <p class="text-xs font-bold text-amber-400">Câu 5. Yếu tố địa hình và khoảng cách xa/gần biển làm khí hậu Bắc Mỹ phân hóa theo chiều nào?</p>
+      <input type="text" id="ans-5" placeholder="Theo chiều..." class="w-full p-2.5 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
       <div id="feedback-5" class="text-xs hidden font-medium"></div>
       <button onclick="checkAndSubmit(5)" id="btn-5" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
         ✔️ Kiểm tra & Nộp Câu 5
       </button>
     </div>
 
-    <!-- CÂU 6 -->
+    <!-- CÂU 6 (MỚI THÊM: KHÍ HẬU THAY ĐỔI THẾ NÀO THEO CHIỀU ĐÔNG - TÂY) -->
     <div id="card-6" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
-      <p class="text-xs font-bold text-amber-400">Câu 6. Yếu tố địa hình và khoảng cách xa/gần biển làm khí hậu Bắc Mỹ phân hóa theo chiều nào?</p>
-      <input type="text" id="ans-6" placeholder="Theo chiều..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+      <p class="text-xs font-bold text-amber-400">Câu 6. Khí hậu Bắc Mỹ thay đổi như thế nào theo chiều Đông – Tây?</p>
+      <textarea id="ans-6" rows="2" placeholder="Nêu sự thay đổi từ ven biển vào sâu trong nội địa..." class="w-full p-2.5 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400"></textarea>
       <div id="feedback-6" class="text-xs hidden font-medium"></div>
       <button onclick="checkAndSubmit(6)" id="btn-6" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
         ✔️ Kiểm tra & Nộp Câu 6
@@ -134,7 +134,7 @@
     <!-- CÂU 7 -->
     <div id="card-7" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
       <p class="text-xs font-bold text-amber-400">Câu 7. Kể tên hai dòng biển NÓNG chảy ven bờ đại dương của Bắc Mỹ xuất hiện trong bản đồ.</p>
-      <input type="text" id="ans-7" placeholder="Tên 2 dòng biển nóng..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+      <input type="text" id="ans-7" placeholder="Tên 2 dòng biển nóng..." class="w-full p-2.5 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
       <div id="feedback-7" class="text-xs hidden font-medium"></div>
       <button onclick="checkAndSubmit(7)" id="btn-7" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
         ✔️ Kiểm tra & Nộp Câu 7
@@ -144,7 +144,7 @@
     <!-- CÂU 8 -->
     <div id="card-8" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 space-y-2">
       <p class="text-xs font-bold text-amber-400">Câu 8. Kể tên hai dòng biển LẠNH chảy ven bờ đại dương của Bắc Mỹ xuất hiện trong bản đồ.</p>
-      <input type="text" id="ans-8" placeholder="Tên 2 dòng biển lạnh..." class="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
+      <input type="text" id="ans-8" placeholder="Tên 2 dòng biển lạnh..." class="w-full p-2.5 bg-slate-900 border border-slate-600 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-amber-400">
       <div id="feedback-8" class="text-xs hidden font-medium"></div>
       <button onclick="checkAndSubmit(8)" id="btn-8" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg text-xs transition">
         ✔️ Kiểm tra & Nộp Câu 8
@@ -166,14 +166,14 @@
     // URL Apps Script của bạn
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWPbmgV0qNToACKJwVPi7MccmL-3KpVoFU7Ac7mc1Nu4lqQSzvKVW_XfLCv66DiU0D/exec";
 
-    // Đáp án chuẩn & Tkeywords kiểm tra thông minh
+    // Đáp án chuẩn & Từ khóa kiểm tra thông minh cho 8 câu
     const ANSWER_KEYS = {
-      1: { standard: "Đới khí hậu ôn đới.", keywords: ["ôn đới"] },
+      1: { standard: "Đới khí hậu ôn đới.", keywords: ["ôn đới", "on doi"] },
       2: { standard: "Khoảng vĩ tuyến 25°B.", keywords: ["25"] },
       3: { standard: "Đới khí hậu cực và cận cực, ôn đới, cận nhiệt, nhiệt đới.", keywords: ["cực", "ôn đới", "cận nhiệt", "nhiệt đới"] },
       4: { standard: "Do lãnh thổ trải dài trên nhiều vĩ độ.", keywords: ["vĩ độ", "trải dài"] },
-      5: { standard: "Biên độ nhiệt độ năm lớn hơn, mưa ít hơn, khí hậu khô hạn hơn.", keywords: ["biên độ", "khô", "ít mưa", "nhiệt độ"] },
-      6: { standard: "Theo chiều Tây – Đông (và theo độ cao).", keywords: ["tây", "đông"] },
+      5: { standard: "Theo chiều Tây – Đông (và theo độ cao).", keywords: ["tây", "đông"] },
+      6: { standard: "Từ ven biển vào nội địa, khí hậu chuyển từ hải dương sang lục địa (mưa ít dần, biên độ nhiệt tăng, khí hậu khô hạn hơn).", keywords: ["hải dương", "lục địa", "khô", "nội địa", "biển", "phân hóa", "khác nhau"] },
       7: { standard: "Dòng biển A-la-xca và dòng biển Cơn-stơ-rim.", keywords: ["a-la-xca", "cơn-stơ-rim", "alaska", "gulf stream", "con-sto-rim"] },
       8: { standard: "Dòng biển La-bra-đo và dòng biển Ca-li-phoc-ni-a.", keywords: ["la-bra-đo", "ca-li-phoc-ni-a", "labrador", "california"] }
     };
@@ -217,7 +217,6 @@
       // Kiểm tra đáp án
       let isCorrect = false;
       if (qNum === 3 || qNum === 7 || qNum === 8) {
-        // Cần khớp ít nhất 2 từ khóa
         let matchCount = 0;
         keyObj.keywords.forEach(kw => {
           if (normalizedUserText.includes(removeAccents(kw))) matchCount++;
@@ -234,7 +233,7 @@
         feedback.classList.add('text-emerald-400', 'bg-emerald-950/40', 'border-emerald-500/40');
         feedback.innerHTML = `🎉 <b>CHÍNH XÁC! TUYỆT VỜI!</b> (+10 điểm)<br><span class="text-slate-300 font-normal">ĐÁP ÁN CHUẨN: ${keyObj.standard}</span>`;
         
-        // Hiệu ứng bắn pháo hoa khen thưởng
+        // Hiệu ứng pháo hoa khen thưởng
         confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
 
         if (!answered[qNum]) {
